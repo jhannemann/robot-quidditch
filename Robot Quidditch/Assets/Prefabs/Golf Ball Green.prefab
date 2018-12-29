@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &3541083010543778970
+--- !u!1001 &5085813395152156124
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -9,7 +9,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1656712688932778, guid: bef0773c98c0e4c3f933d265a7acc262, type: 3}
       propertyPath: m_Name
-      value: Golf Ball Yellow
+      value: Golf Ball Green
       objectReference: {fileID: 0}
     - target: {fileID: 4060669748803142, guid: bef0773c98c0e4c3f933d265a7acc262, type: 3}
       propertyPath: m_LocalPosition.x
@@ -55,10 +55,15 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 23963087517402026, guid: bef0773c98c0e4c3f933d265a7acc262,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 82a2b6a4c91b74a0b951eacf44e5662d, type: 2}
     - target: {fileID: 54532248980206268, guid: bef0773c98c0e4c3f933d265a7acc262,
         type: 3}
       propertyPath: m_Mass
-      value: 0.007
+      value: 0.009
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bef0773c98c0e4c3f933d265a7acc262, type: 3}
