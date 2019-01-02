@@ -302,7 +302,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1540495215438768}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: f33a78540184a47ba9db82feeb82a125, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -393,10 +393,10 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1582959118288240}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: f33a78540184a47ba9db82feeb82a125, type: 2}
   m_IsTrigger: 0
-  m_Enabled: 0
-  m_Radius: 0.5000001
+  m_Enabled: 1
+  m_Radius: 0.4
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
@@ -559,10 +559,10 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1675106475944356}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: f33a78540184a47ba9db82feeb82a125, type: 2}
   m_IsTrigger: 0
-  m_Enabled: 0
-  m_Radius: 0.5000001
+  m_Enabled: 1
+  m_Radius: 0.4
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
@@ -712,10 +712,10 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1757554133124546}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: f33a78540184a47ba9db82feeb82a125, type: 2}
   m_IsTrigger: 0
-  m_Enabled: 0
-  m_Radius: 0.5000001
+  m_Enabled: 1
+  m_Radius: 0.4
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
@@ -838,10 +838,10 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1962990505405690}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: f33a78540184a47ba9db82feeb82a125, type: 2}
   m_IsTrigger: 0
-  m_Enabled: 0
-  m_Radius: 0.5000001
+  m_Enabled: 1
+  m_Radius: 0.4
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
