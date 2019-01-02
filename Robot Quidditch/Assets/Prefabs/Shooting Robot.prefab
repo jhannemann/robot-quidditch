@@ -161,6 +161,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114606935532393402, guid: 2ea0731fd150346b8a42e5cbcdefa6b1,
+        type: 3}
+      propertyPath: axleInfos.Array.data[0].motor
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114606935532393402, guid: 2ea0731fd150346b8a42e5cbcdefa6b1,
+        type: 3}
+      propertyPath: axleInfos.Array.data[0].steering
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114606935532393402, guid: 2ea0731fd150346b8a42e5cbcdefa6b1,
+        type: 3}
+      propertyPath: axleInfos.Array.data[1].motor
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2ea0731fd150346b8a42e5cbcdefa6b1, type: 3}
 --- !u!4 &1335058607277385031 stripped

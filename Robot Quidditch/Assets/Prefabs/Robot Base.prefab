@@ -466,14 +466,15 @@ MonoBehaviour:
   axleInfos:
   - leftWheel: {fileID: 146858932568397270}
     rightWheel: {fileID: 146654550525514904}
-    motor: 1
-    steering: 1
+    motor: 0
+    steering: 0
   - leftWheel: {fileID: 146738105845160716}
     rightWheel: {fileID: 146443919032047366}
-    motor: 1
+    motor: 0
     steering: 0
   maxMotorTorque: 1
   maxSteeringAngle: 30
+  autonomous: 0
 --- !u!1 &1675106475944356
 GameObject:
   m_ObjectHideFlags: 0

@@ -226,6 +226,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Defending Robot
       objectReference: {fileID: 0}
+    - target: {fileID: 54996828808717058, guid: 2ea0731fd150346b8a42e5cbcdefa6b1,
+        type: 3}
+      propertyPath: m_Constraints
+      value: 114
+      objectReference: {fileID: 0}
     - target: {fileID: 4779575079859096, guid: 2ea0731fd150346b8a42e5cbcdefa6b1, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -273,7 +278,7 @@ PrefabInstance:
     - target: {fileID: 114606935532393402, guid: 2ea0731fd150346b8a42e5cbcdefa6b1,
         type: 3}
       propertyPath: axleInfos.Array.data[0].motor
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114606935532393402, guid: 2ea0731fd150346b8a42e5cbcdefa6b1,
         type: 3}
@@ -283,7 +288,12 @@ PrefabInstance:
     - target: {fileID: 114606935532393402, guid: 2ea0731fd150346b8a42e5cbcdefa6b1,
         type: 3}
       propertyPath: axleInfos.Array.data[1].motor
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114606935532393402, guid: 2ea0731fd150346b8a42e5cbcdefa6b1,
+        type: 3}
+      propertyPath: autonomous
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2ea0731fd150346b8a42e5cbcdefa6b1, type: 3}
