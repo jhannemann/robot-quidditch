@@ -413,7 +413,7 @@ GameObject:
   - component: {fileID: 114606935532393402}
   m_Layer: 0
   m_Name: Robot Base
-  m_TagString: Untagged
+  m_TagString: Robot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -475,6 +475,7 @@ MonoBehaviour:
   maxMotorTorque: 1
   maxSteeringAngle: 30
   autonomous: 0
+  speed: 1
 --- !u!1 &1675106475944356
 GameObject:
   m_ObjectHideFlags: 0
