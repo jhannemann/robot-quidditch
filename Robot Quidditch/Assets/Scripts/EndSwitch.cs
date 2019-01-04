@@ -6,9 +6,8 @@ public class EndSwitch : MonoBehaviour
 {
     public RobotController controller;
    
-    void OnTriggerEnter()
+    void OnCollisionStay()
     {
-        Debug.Log("Collision: "+gameObject.name);
         if (gameObject.name == "Front Switch")
         {
             controller.SetEvent(RobotController.Event.FrontSwitchOn);

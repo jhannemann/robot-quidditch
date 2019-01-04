@@ -94,7 +94,7 @@ public class RobotController : MonoBehaviour {
 		}
 		else
 		{
-			Debug.DrawRay(transform.position, dir * 1000, Color.white);
+			Debug.DrawRay(transform.position, dir * 1000, Color.red);
 			currentHit = false;
 		}
 	}
@@ -158,7 +158,6 @@ public class RobotController : MonoBehaviour {
 	private void AutonomousMove()
 	{
 		Assert.IsTrue(autonomous);
-
 		CastRay();
 		UpdateLockStatus();
 
