@@ -1,10 +1,7 @@
-﻿using System;
-using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
-using System.Xml.Serialization;
+using UnityEngine;
 using UnityEngine.Assertions;
-using UnityEngine.XR.WSA.WebCam;
 
 [System.Serializable]
 public class AxleInfo {
