@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 1511561702203462507}
   - component: {fileID: 2490711855568882307}
   - component: {fileID: 6008312745040269032}
+  - component: {fileID: 5428171808848533623}
+  - component: {fileID: 8688897266774355470}
   m_Layer: 0
   m_Name: End Switch
   m_TagString: Untagged
@@ -86,7 +88,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 389474038297736926}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: f33a78540184a47ba9db82feeb82a125, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -104,3 +106,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14dbd7eef57e443268337d926f82ebda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  controller: {fileID: 0}
+--- !u!54 &5428171808848533623
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 389474038297736926}
+  serializedVersion: 2
+  m_Mass: 0.011
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
+--- !u!138 &8688897266774355470
+FixedJoint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 389474038297736926}
+  m_ConnectedBody: {fileID: 0}
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_EnableCollision: 0
+  m_EnablePreprocessing: 1
+  m_MassScale: 1
+  m_ConnectedMassScale: 1
