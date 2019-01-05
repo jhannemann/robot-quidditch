@@ -6,7 +6,7 @@ public class Ball : MonoBehaviour
 {
     public float speed;
 
-    void Update()
+    private void Update()
     {
         // destroy object if it is on or below the ground
         if (transform.position.y <= transform.localScale.y/2.0f)
@@ -14,4 +14,20 @@ public class Ball : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.CompareTag("Target"))
+        {
+            Game.instance.score += 1;
+            Destroy(gameObject);
+        }
+    }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        if(other.gameObject.CompareTag("Blocker"))
+        {
+            Game.instance.shotsBlocked += 1;
+        }    }
 }

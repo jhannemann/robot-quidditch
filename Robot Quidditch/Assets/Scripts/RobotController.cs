@@ -195,6 +195,7 @@ public class RobotController : MonoBehaviour {
 
 	void FixedUpdate()
 	{
+		if (!Game.instance.started) return;
 		if (autonomous)
 		{
 			AutonomousMove();

@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Robot
   - Wall
+  - Target
+  - Blocker
   layers:
   - Default
   - TransparentFX

@@ -476,6 +476,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 1540495215438768, guid: 2ea0731fd150346b8a42e5cbcdefa6b1, type: 3}
+      propertyPath: m_TagString
+      value: Blocker
+      objectReference: {fileID: 0}
     - target: {fileID: 1872835330794036, guid: 2ea0731fd150346b8a42e5cbcdefa6b1, type: 3}
       propertyPath: m_Layer
       value: 2
