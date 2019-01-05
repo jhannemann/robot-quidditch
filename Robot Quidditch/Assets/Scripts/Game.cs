@@ -68,8 +68,10 @@ public class Game : MonoBehaviour
     private void StartGame()
     {
         SceneManager.LoadScene("DefaultScene");
-        InitGame();
         started = true;
+        score = 0;
+        shotsBlocked = 0;
+        timeRemaining = length;
         gameOverText.gameObject.SetActive(false);
         startGameButton.gameObject.SetActive(false);
         quitButton.gameObject.SetActive(false);
