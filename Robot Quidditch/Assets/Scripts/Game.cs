@@ -24,6 +24,7 @@ public class Game : MonoBehaviour
     private Text timeText;
     private Text gameOverText;
     private Button startGameButton;
+    private Button quitButton;
     private float timeRemaining;
 
     void Awake()
@@ -52,6 +53,7 @@ public class Game : MonoBehaviour
         timeText = GameObject.Find("Time Text").GetComponent<Text>();
         gameOverText = GameObject.Find("Game Over Text").GetComponent<Text>();
         startGameButton = GameObject.Find("Start Game Button").GetComponent<Button>();
+        quitButton = GameObject.Find("Quit Button").GetComponent<Button>();
         
         scoreText.text = "    Score: " + score.ToString();
         blockedText.text = "Blocked: " + shotsBlocked.ToString();
@@ -59,6 +61,8 @@ public class Game : MonoBehaviour
         gameOverText.gameObject.SetActive(true);
         startGameButton.gameObject.SetActive(true);
         startGameButton.onClick.AddListener(instance.StartGame);
+        quitButton.gameObject.SetActive(true);
+        quitButton.onClick.AddListener(Application.Quit);
     }
 
     private void StartGame()
@@ -68,6 +72,7 @@ public class Game : MonoBehaviour
         started = true;
         gameOverText.gameObject.SetActive(false);
         startGameButton.gameObject.SetActive(false);
+        quitButton.gameObject.SetActive(false);
     }
 
     private void StopGame()
@@ -75,6 +80,7 @@ public class Game : MonoBehaviour
         started = false;
         gameOverText.gameObject.SetActive(true);
         startGameButton.gameObject.SetActive(true);
+        quitButton.gameObject.SetActive(true);
         timeText.text = "      Time: 0";
     }
     
@@ -102,6 +108,11 @@ public class Game : MonoBehaviour
             {
                 StartGame();
             }
+        }
+
+        if(Input.GetKey("escape"))
+        {
+            Application.Quit();
         }
     }
 }
