@@ -13,20 +13,28 @@ class ScoreBoard(Frame):
         self.timer = None
         Frame.__init__(self, parent)
         self.nameRedLabel = Label(parent, text='Red', relief='sunken',
-                                  width=50)
+                                  bg='red', fg='white',
+                                  font=('Helvetica', 50, 'bold'))
         self.timeLabel = Label(parent, text='00:00', relief='sunken',
-                               width=100)
+                               bg='black', fg='yellow',
+                               font=('Courier', 100, 'bold'))
         self.nameBlueLabel = Label(parent, text='Blue', relief='sunken',
-                                   width=50)
+                                   bg='blue', fg='white',
+                                   font=('Helvetica', 50, 'bold'))
         self.scoreRedLabel = Label(parent, text='000', relief='sunken',
-                                   width=50)
+                                   bg='black', fg='yellow',
+                                   font=('Courier', 100, 'bold'))
         self.scoreBlueLabel = Label(parent, text='000', relief='sunken',
-                                    width=50)
-        self.buttonRed = Button(parent, text='+', width=50,
+                                    bg='black', fg='yellow',
+                                    font=('Courier', 100, 'bold'))
+        self.buttonRed = Button(parent, text='+',
+                                font=('Helvetica', 100, 'bold'),
                                 command=self.increaseRedScore)
-        self.buttonTime = Button(parent, text='▶︎', width=100,
+        self.buttonTime = Button(parent, text='▶︎',
+                                 font=('Helvetica', 100, 'bold'),
                                  command=self.toggleTime)
-        self.buttonBlue = Button(parent, text='+', width=50,
+        self.buttonBlue = Button(parent, text='+',
+                                 font=('Helvetica', 100, 'bold'),
                                  command=self.increaseBlueScore)
 
         self.nameRedLabel.grid(row=0, column=0, sticky=NSEW)
