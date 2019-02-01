@@ -30,7 +30,7 @@ class ScoreBoard(Frame):
         self.buttonRed = Button(parent, text='+',
                                 font=('Helvetica', 100, 'bold'),
                                 command=self.increaseRedScore)
-        self.buttonTime = Button(parent, text='▶︎',
+        self.buttonTime = Button(parent, text='▶',
                                  font=('Helvetica', 100, 'bold'),
                                  command=self.toggleTime)
         self.buttonBlue = Button(parent, text='+',
@@ -63,7 +63,7 @@ class ScoreBoard(Frame):
     def toggleTime(self):
         if self.running:
             self.running = False
-            self.buttonTime.config(text='▶︎')
+            self.buttonTime.config(text='▶')
             self.after_cancel(self.timer)
             self.timer = None
         else:
@@ -103,7 +103,7 @@ def sPressed(board):
 
 root = Tk()
 root.title('RoboArena Score Board')
-root.geometry("800x600+100+100")
+root.geometry("900x600+100+100")
 board = ScoreBoard(root)
 root.bind('<space>', lambda event: spacePressed(board))
 root.bind('a', lambda event: aPressed(board))
