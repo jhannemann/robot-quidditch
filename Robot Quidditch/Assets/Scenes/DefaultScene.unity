@@ -716,6 +716,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   length: 60
+  maxBalls: 10
   score: 0
   shotsBlocked: 0
   started: 0
@@ -1404,7 +1405,7 @@ GameObject:
   - component: {fileID: 1100452751}
   m_Layer: 2
   m_Name: Loading Area Blue
-  m_TagString: Untagged
+  m_TagString: Loading Area
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2475,7 +2476,7 @@ GameObject:
   - component: {fileID: 1805746265}
   m_Layer: 2
   m_Name: Loading Area Red
-  m_TagString: Untagged
+  m_TagString: Loading Area
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -105,7 +105,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 110983203dbb64e349ebdd09701305d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ball: {fileID: 3540276782189013808, guid: 80740251fe2a2413e91c0b278bb3cd66, type: 3}
+  balls:
+  - {fileID: 3540276782189013808, guid: 80740251fe2a2413e91c0b278bb3cd66, type: 3}
+  - {fileID: 6680721531323673447, guid: b02dce979f3f54638a5e3d4dce980dbc, type: 3}
+  - {fileID: 3415057664622730860, guid: 89dd0fb4427a24f8a9db89c20cb8fe69, type: 3}
+  - {fileID: 5085006615152042614, guid: 0f63ad96f84784f0a90c33a3c903fac5, type: 3}
 --- !u!1 &8034052850276903901
 GameObject:
   m_ObjectHideFlags: 0

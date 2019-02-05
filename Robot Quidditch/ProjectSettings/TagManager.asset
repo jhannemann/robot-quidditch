@@ -8,6 +8,7 @@ TagManager:
   - Wall
   - Target
   - Blocker
+  - Loading Area
   layers:
   - Default
   - TransparentFX

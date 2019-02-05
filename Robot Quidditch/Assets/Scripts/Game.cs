@@ -13,8 +13,10 @@ public class Game : MonoBehaviour
     public static Game instance;
     
     public float length;
+    public int maxBalls;
     public int score;
     public int shotsBlocked;
+
     
     [HideInInspector]
     public bool started;

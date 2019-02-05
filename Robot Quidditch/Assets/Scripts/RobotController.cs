@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Callbacks;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -20,6 +21,8 @@ public class RobotController : MonoBehaviour {
 	// movement parameters, either set by GetAxis() or AutonomousMove()
 	private float motor;
 	private float steering;
+
+	private BallShooter shooter;
 	
 	// state and event variables to determine next action
 	private enum State
@@ -65,6 +68,7 @@ public class RobotController : MonoBehaviour {
 
 	void Start()
 	{
+		shooter = GetComponentInChildren<BallShooter>();
 		steering = 0.0f;
 		motor = 0.0f;
 		previousHit = false;
@@ -216,6 +220,14 @@ public class RobotController : MonoBehaviour {
 			}
 			ApplyLocalPositionToVisuals(axleInfo.leftWheel);
 			ApplyLocalPositionToVisuals(axleInfo.rightWheel);
+		}
+	}
+
+	private void OnTriggerEnter(Collider other)
+	{
+		if (other.gameObject.CompareTag("Loading Area"))
+		{
+			shooter.reload();
 		}
 	}
 }
