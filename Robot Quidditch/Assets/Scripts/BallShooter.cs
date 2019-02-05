@@ -10,7 +10,6 @@ public class BallShooter : MonoBehaviour
 	private GameObject currentBall;
 	private float speed;
 	private Rigidbody rb;
-	private int numberOfBalls;
 
 	private void switchBall()
 	{
@@ -22,7 +21,7 @@ public class BallShooter : MonoBehaviour
 
 	public void reload()
 	{
-		numberOfBalls = Game.instance.maxBalls;
+		Game.instance.numberOfBalls = Game.instance.maxBalls;
 	}
 	
 	// Use this for initialization
@@ -39,9 +38,9 @@ public class BallShooter : MonoBehaviour
 		if (!Game.instance.started) return;
 		
 		// Ctrl was pressed, launch a projectile
-		if (Input.GetButtonDown("Fire1") && numberOfBalls>0)
+		if (Input.GetButtonDown("Fire1") && Game.instance.numberOfBalls>0)
 		{
-			numberOfBalls--;
+			Game.instance.numberOfBalls--;
 			Transform t = transform;
 			// Instantiate the projectile at the position of the barrel and translate along the barrel by its length
 			var length = t.localScale.y;

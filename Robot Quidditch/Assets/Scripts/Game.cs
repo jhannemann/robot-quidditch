@@ -20,10 +20,12 @@ public class Game : MonoBehaviour
     
     [HideInInspector]
     public bool started;
+    public int numberOfBalls;
     
     private Text scoreText;
     private Text blockedText;
     private Text timeText;
+    private Text ballsText;
     private Text gameOverText;
     private Button startGameButton;
     private Button quitButton;
@@ -53,6 +55,7 @@ public class Game : MonoBehaviour
         scoreText = GameObject.Find("Score Text").GetComponent<Text>();
         blockedText = GameObject.Find("Blocked Text").GetComponent<Text>();
         timeText = GameObject.Find("Time Text").GetComponent<Text>();
+        ballsText = GameObject.Find("Balls Text").GetComponent<Text>();
         gameOverText = GameObject.Find("Game Over Text").GetComponent<Text>();
         startGameButton = GameObject.Find("Start Game Button").GetComponent<Button>();
         quitButton = GameObject.Find("Quit Button").GetComponent<Button>();
@@ -60,6 +63,7 @@ public class Game : MonoBehaviour
         scoreText.text = "    Score: " + score.ToString();
         blockedText.text = "Blocked: " + shotsBlocked.ToString();
         timeText.text = "     Time: 0";
+        ballsText.text = "     Balls: " + numberOfBalls.ToString();
         gameOverText.gameObject.SetActive(true);
         startGameButton.gameObject.SetActive(true);
         startGameButton.onClick.AddListener(instance.StartGame);
@@ -74,6 +78,7 @@ public class Game : MonoBehaviour
         score = 0;
         shotsBlocked = 0;
         timeRemaining = length;
+        numberOfBalls = maxBalls;
         gameOverText.gameObject.SetActive(false);
         startGameButton.gameObject.SetActive(false);
         quitButton.gameObject.SetActive(false);
@@ -95,7 +100,8 @@ public class Game : MonoBehaviour
             timeRemaining -= Time.deltaTime;
             scoreText.text = "    Score: " + score.ToString();
             blockedText.text = "Blocked: " + shotsBlocked.ToString();
-            timeText.text = "      Time: " + ((int)(timeRemaining)).ToString();
+            timeText.text = "     Time: " + ((int)(timeRemaining)).ToString();
+            ballsText.text = "     Balls: " + numberOfBalls.ToString();
             if (timeRemaining <= 0.0f)
             {
                 StopGame();
