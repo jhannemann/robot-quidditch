@@ -17,6 +17,7 @@ public class BallShooter : MonoBehaviour
 		currentBall = balls[currentBallIndex];
 		speed = currentBall.GetComponent<Ball>().speed;
 		rb = currentBall.GetComponent<Rigidbody>();
+		Game.instance.ballImage.color = currentBall.GetComponent<Renderer>().sharedMaterial.color;
 	}
 
 	public void reload()

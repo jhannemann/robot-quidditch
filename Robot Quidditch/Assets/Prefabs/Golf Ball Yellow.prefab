@@ -11,6 +11,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Golf Ball Yellow
       objectReference: {fileID: 0}
+    - target: {fileID: 114236901452237646, guid: bef0773c98c0e4c3f933d265a7acc262,
+        type: 3}
+      propertyPath: speed
+      value: 7.8952
+      objectReference: {fileID: 0}
     - target: {fileID: 4060669748803142, guid: bef0773c98c0e4c3f933d265a7acc262, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

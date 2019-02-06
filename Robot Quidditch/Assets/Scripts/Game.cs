@@ -21,6 +21,7 @@ public class Game : MonoBehaviour
     [HideInInspector]
     public bool started;
     public int numberOfBalls;
+    public Image ballImage;
     
     private Text scoreText;
     private Text blockedText;
@@ -59,6 +60,7 @@ public class Game : MonoBehaviour
         gameOverText = GameObject.Find("Game Over Text").GetComponent<Text>();
         startGameButton = GameObject.Find("Start Game Button").GetComponent<Button>();
         quitButton = GameObject.Find("Quit Button").GetComponent<Button>();
+        ballImage = GameObject.Find("Ball Image").GetComponent<Image>();
         
         scoreText.text = "    Score: " + score.ToString();
         blockedText.text = "Blocked: " + shotsBlocked.ToString();
