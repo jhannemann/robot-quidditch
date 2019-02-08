@@ -14,20 +14,4 @@ public class Ball : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if(other.gameObject.CompareTag("Target"))
-        {
-            Game.instance.score += 1;
-            Destroy(gameObject);
-        }
-    }
-
-    private void OnCollisionEnter(Collision other)
-    {
-        if(other.gameObject.CompareTag("Blocker"))
-        {
-            Game.instance.shotsBlocked += 1;
-        }    }
 }
