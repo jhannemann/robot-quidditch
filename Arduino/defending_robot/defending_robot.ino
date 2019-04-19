@@ -1,10 +1,17 @@
 /*
 Wiring Diagram for QTI Sensors:
 Arduino          Sensor
-D7               QTI4 - Far left
-D6               QTI3 - Mid left
-D5               QTI2 - Mid right
-D4               QTI1 - Far right
+D7               QTI3 - Left
+D6               QTI2 - Mid
+D5               QTI1 - Right
+
+Wiring Diagram for Switches
+D8               Front Switch
+D9               Back Switch
+
+Wiring Diagram for Ultrasound Sensor
+D10              Trig
+D11              Echo
 
 Wiring Diagram for Servos:
 Arduino          Servo
@@ -14,23 +21,28 @@ D12              Right servo
 
 #include <Servo.h>
 
-// #define NDEBUG
+//#define NDEBUG
 
-const int BASE_SPEED = 150; // microseconds
-const int TURN = 100; // microseconds
+const int BASE_SPEED = 130; // microseconds
+const int LEFT_DIFFERENTIAL = 0.3*BASE_SPEED; // microseconds
+const int REVERSE_BIAS = 0.28*BASE_SPEED;
+const int TURN = 40; // microseconds
 const int BASE_FREQ = 1500; // microseconds
 const int MAX_DISTANCE = 150; //cm
-const int QTI_CHARGE_TIME = 330; // microseconds
-const int QTI_DISCHARGE_TIME = 330; // microseconds
-const int STARTUP_DELAY = 1000; // milliseconds
+const int QTI_CHARGE_TIME = 800; // microseconds
+const int QTI_DISCHARGE_TIME = 800; // microseconds
+const int STARTUP_DELAY = 2000; // milliseconds
 const unsigned long DEBOUNCE_DELAY = 100; // milliseconds
 const unsigned DISTANCE_ARRAY_SIZE = 16;
 
-const int TRIG_PIN = 9;
-const int ECHO_PIN = 10;
-const int SWITCH_PIN = 11;
-const int SERVO_L_PIN = 13;
-const int SERVO_R_PIN = 12;
+const int TRIG_PIN = 10;
+const int ECHO_PIN = 11;
+const int SERVO_L_PIN = 12;
+const int SERVO_R_PIN = 13;
+
+const int SWITCH_F_PIN = 8;
+const int SWITCH_B_PIN = 9;
+
 
 bool reverse = false;
 bool switchState;
@@ -43,15 +55,17 @@ int currentDistance = 0;
 Servo servoL;
 Servo servoR;
 
-void forward() {
-  if(reverse) {
-    servoL.writeMicroseconds(BASE_FREQ - BASE_SPEED);
-    servoR.writeMicroseconds(BASE_FREQ + BASE_SPEED);
-  }
-  else {
-    servoL.writeMicroseconds(BASE_FREQ + BASE_SPEED);
-    servoR.writeMicroseconds(BASE_FREQ - BASE_SPEED);
-  }
+void calibrationSequence() {
+  stop();
+  forward();
+  delay(3000);
+  stop();
+  delay(1000);
+  reverse=true;
+  forward();
+  delay(3000);
+  stop();
+  while(true);
 }
 
 void stop() {
@@ -59,25 +73,36 @@ void stop() {
   servoR.writeMicroseconds(BASE_FREQ);
 }
 
-void turnLeft(int amount) {
+void forward() {
   if(reverse) {
-    servoL.writeMicroseconds(BASE_FREQ - BASE_SPEED);
-    servoR.writeMicroseconds(BASE_FREQ + BASE_SPEED - amount*TURN);
+    servoL.writeMicroseconds(BASE_FREQ + BASE_SPEED + REVERSE_BIAS - LEFT_DIFFERENTIAL);
+    servoR.writeMicroseconds(BASE_FREQ - BASE_SPEED - REVERSE_BIAS);
   }
   else {
-    servoL.writeMicroseconds(BASE_FREQ + BASE_SPEED - amount*TURN);
-    servoR.writeMicroseconds(BASE_FREQ - BASE_SPEED);
+    servoL.writeMicroseconds(BASE_FREQ - BASE_SPEED - LEFT_DIFFERENTIAL);
+    servoR.writeMicroseconds(BASE_FREQ + BASE_SPEED);
+  }
+}
+
+void turnLeft(int amount) {
+  if(reverse) {
+    servoL.writeMicroseconds(BASE_FREQ + BASE_SPEED + REVERSE_BIAS - LEFT_DIFFERENTIAL);
+    servoR.writeMicroseconds(BASE_FREQ - BASE_SPEED - REVERSE_BIAS + amount*TURN);
+  }
+  else {
+    servoL.writeMicroseconds(BASE_FREQ - BASE_SPEED - LEFT_DIFFERENTIAL + amount*TURN);
+    servoR.writeMicroseconds(BASE_FREQ + BASE_SPEED);
   }
 }
 
 void turnRight(int amount) {
   if(reverse) {
-    servoL.writeMicroseconds(BASE_FREQ - BASE_SPEED + amount*TURN);
-    servoR.writeMicroseconds(BASE_FREQ + BASE_SPEED);
+    servoL.writeMicroseconds(BASE_FREQ + BASE_SPEED + REVERSE_BIAS - LEFT_DIFFERENTIAL - amount*TURN);
+    servoR.writeMicroseconds(BASE_FREQ - BASE_SPEED - REVERSE_BIAS);
   }
   else {
-    servoL.writeMicroseconds(BASE_FREQ + BASE_SPEED);
-    servoR.writeMicroseconds(BASE_FREQ - BASE_SPEED + amount*TURN);
+    servoL.writeMicroseconds(BASE_FREQ - BASE_SPEED - LEFT_DIFFERENTIAL);
+    servoR.writeMicroseconds(BASE_FREQ + BASE_SPEED - amount*TURN);
   }
 }
 
@@ -116,6 +141,7 @@ void setup()
   pinMode(SWITCH_PIN, INPUT_PULLUP);
   stop();
   delay(STARTUP_DELAY);
+  //calibrationSequence();
 }
 
 // This code repeats indefinitely
@@ -128,50 +154,76 @@ void loop()
   PORTD &= B00001111;                    // Set level of pins D4-D7 to LOW
   delayMicroseconds(QTI_DISCHARGE_TIME); // Discharge capacitor in QTI module
   uint16_t pins = PIND;                  // Get values of pins D0-D7
-  pins >>= 4U;                           // Keep only pins D4-D7
+  pins >>= 5U;                           // Keep only pins D5-D7
 
 #ifndef NDEBUG
   Serial.print("Pins: ");
-  Serial.print((bool)(pins & B1000));
+  //Serial.print((bool)(pins & B1000));
   Serial.print((bool)(pins & B0100));
   Serial.print((bool)(pins & B0010));
   Serial.print((bool)(pins & B0001));
 #endif
 
-  bool switchReading = digitalRead(SWITCH_PIN);
-  if ((millis() - lastDebounceTime) > DEBOUNCE_DELAY) {
-      // whatever the reading is at, it's been there for longer than the debounce
-      // delay, so take it as the actual current state:
-  
-      // if the button state has changed:
-      if (switchReading != switchState) {
-        switchState = switchReading;
-  
-        if (switchState == LOW) {
-          reverse = !reverse;
-          stop();
-        }
-      }
-  }
+//  bool switchReading = digitalRead(SWITCH_PIN);
+//  if ((millis() - lastDebounceTime) > DEBOUNCE_DELAY) {
+//      // whatever the reading is at, it's been there for longer than the debounce
+//      // delay, so take it as the actual current state:
+//  
+//      // if the button state has changed:
+//      if (switchReading != switchState) {
+//        switchState = switchReading;
+//  
+//        if (switchState == LOW) {
+//          reverse = !reverse;
+//          stop();
+//        }
+//      }
+//  }
 
 #ifndef NDEBUG
   Serial.print(", Switch: "); 
-  Serial.print(switchReading);
+//  Serial.print(switchReading);
   Serial.print(", Reverse: ");
-  Serial.print(reverse);
+  Serial.println(reverse);
 #endif
 
-  int distance = sensorDistance();
+//  int distance = sensorDistance();
+//
+// #ifndef NDEBUG
+//  Serial.print(", Distance: ");
+//  Serial.println(distance);
+// #endif
+//
+//  if(distance > MAX_DISTANCE)
+//    stop();
+//  else
+//    forward();
 
- #ifndef NDEBUG
-  Serial.print(", Distance: ");
-  Serial.println(distance);
- #endif
+  switch(pins) {
+    case B100:
+      turnLeft(3);
+      break;
+    case B110:
+      turnLeft(2);
+      break;
+    case B010:
+    case B111:
+      forward();
+      break;
+    case B001:
+      turnRight(3);
+      break;
+    case B011:
+      turnRight(2);
+      break;
+    default:
+      forward();
+  }
 
-  if(distance > MAX_DISTANCE)
-    stop();
-  else
-    forward();
+//turnRight(3);
+//delay(3000);
+//turnLeft(3);
+//delay(3000);
 
 //  switch(pins) {
 //    case B0001:
@@ -209,5 +261,5 @@ void loop()
 //      stop();
 //}
   
-  delay(50);
+//  delay(50);
 }
