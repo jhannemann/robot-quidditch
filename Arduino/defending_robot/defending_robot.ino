@@ -22,17 +22,20 @@ D12              Right servo
 #include <Servo.h>
 
 //#define NDEBUG
+//#define ENABLE_CALIBRATION
+//#define ENABLE_QTI
+//#define ENABLE_ULTRASND
 
 const int BASE_SPEED = 130; // microseconds
 const int LEFT_DIFFERENTIAL = 0.3*BASE_SPEED; // microseconds
 const int REVERSE_BIAS = 0.28*BASE_SPEED;
-const int TURN = 40; // microseconds
+const int TURN = 25; // microseconds
 const int BASE_FREQ = 1500; // microseconds
 const int MAX_DISTANCE = 150; //cm
 const int QTI_CHARGE_TIME = 800; // microseconds
 const int QTI_DISCHARGE_TIME = 800; // microseconds
 const int STARTUP_DELAY = 2000; // milliseconds
-const unsigned long DEBOUNCE_DELAY = 10; // milliseconds
+const unsigned long DEBOUNCE_DELAY = 1; // milliseconds
 const unsigned DISTANCE_ARRAY_SIZE = 16;
 
 const int TRIG_PIN = 10;
@@ -72,14 +75,17 @@ Switch switchFront(SWITCH_F_PIN);
 Switch switchBack(SWITCH_B_PIN);
 
 bool reverse = false;
-unsigned long lastDebounceTime = 0;
-// use a average for distance to act as a low-pass filter
+
+#ifdef ENABLE_QTI
+// use an average for distance to act as a low-pass filter
 int distances[DISTANCE_ARRAY_SIZE];
 int currentDistance = 0;
+#endif
 
 Servo servoL;
 Servo servoR;
 
+#ifdef ENABLE_CALIBRATION
 void calibrationSequence() {
   stop();
   delay(3000);
@@ -93,6 +99,7 @@ void calibrationSequence() {
   stop();
   while(true);
 }
+#endif
 
 void stop() {
   servoL.writeMicroseconds(BASE_FREQ);
@@ -132,6 +139,7 @@ void turnRight(int amount) {
   }
 }
 
+#ifdef ENABLE_ULTRASND
  int sensorDistance() {
   digitalWrite(TRIG_PIN, LOW);
   delayMicroseconds(2);
@@ -148,32 +156,38 @@ void turnRight(int amount) {
     averageDistance += distances[i];
   }
   return averageDistance/DISTANCE_ARRAY_SIZE;
-  //return distance;
  }
+ #endif
 
-// Perform these steps with the Arduino is first powered on
 void setup()
 {
 #ifndef NDEBUG
   Serial.begin(9600);
  #endif
-  for(int i=0; i<DISTANCE_ARRAY_SIZE; ++i) {
-    distances[i] = 0;
-  }
+
   servoL.attach(SERVO_L_PIN);
   servoR.attach(SERVO_R_PIN);
-  pinMode(TRIG_PIN, OUTPUT);
-  pinMode(ECHO_PIN, INPUT); 
   pinMode(SWITCH_F_PIN, INPUT_PULLUP);
   pinMode(SWITCH_B_PIN, INPUT_PULLUP);
   stop();
   delay(STARTUP_DELAY);
-  //calibrationSequence();
+
+#ifdef ENABLE_ULTRASND
+  pinMode(TRIG_PIN, OUTPUT);
+  pinMode(ECHO_PIN, INPUT); 
+  for(int i=0; i<DISTANCE_ARRAY_SIZE; ++i) {
+    distances[i] = 0;
+  }
+#endif
+
+#ifdef ENABLE_CALIBRATION
+  calibrationSequence();
+#endif
 }
 
-// This code repeats indefinitely
 void loop()
 {
+#ifdef ENABLE_QTI
   DDRD |= B11110000;                     // Set direction of Arduino pins D4-D7 as OUTPUT
   PORTD |= B11110000;                    // Set level of Arduino pins D4-D7 to HIGH
   delayMicroseconds(QTI_CHARGE_TIME);    // Charge capacitor in QTI module
@@ -188,6 +202,7 @@ void loop()
   Serial.print((bool)(pins & B0100));
   Serial.print((bool)(pins & B0010));
   Serial.print((bool)(pins & B0001));
+#endif
 #endif
 
   bool switchFrontReading = switchFront.state();
@@ -221,38 +236,58 @@ void loop()
   Serial.println(reverse);
 #endif
 
-//  int distance = sensorDistance();
-//
-// #ifndef NDEBUG
-//  Serial.print(", Distance: ");
-//  Serial.println(distance);
-// #endif
-//
-//  if(distance > MAX_DISTANCE)
-//    stop();
-//  else
-//    forward();
+#ifdef ENABLE_ULTRASND
+  int distance = sensorDistance();
+
+ #ifndef NDEBUG
+  Serial.print(", Distance: ");
+  Serial.println(distance);
+ #endif
+
+  if(distance > MAX_DISTANCE)
+    stop();
+  else
+    forward();
+#endif //ENABLE_ULTRASND
 
   if(switchFrontReading == HIGH && switchBackReading == HIGH) {
+#ifndef ENABLE_QTI
+    forward();
+#else
     switch(pins) {
       case B100:
-        turnLeft(3);
+        if(reverse)
+          turnLeft(1);
+        else
+          turnRight(1);
         break;
       case B110:
-        turnLeft(2);
+        if(reverse)
+          turnLeft(1);
+        else
+          turnRight(1);
         break;
       case B010:
-      case B111:
         forward();
         break;
       case B001:
-        turnRight(3);
+        if(reverse)
+          turnRight(1);
+        else
+          turnLeft(1);
         break;
       case B011:
-        turnRight(2);
+        if(reverse)
+          turnRight(1);
+        else
+          turnLeft(1);
+        break;
+      case B111:
+        stop();
         break;
       default:
         forward();
     }
+#endif //ENABLE_QTI
   }
 }
