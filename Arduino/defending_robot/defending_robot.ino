@@ -76,7 +76,7 @@ Switch switchBack(SWITCH_B_PIN);
 
 bool reverse = false;
 
-#ifdef ENABLE_QTI
+#ifdef ENABLE_ULTRASND
 // use an average for distance to act as a low-pass filter
 int distances[DISTANCE_ARRAY_SIZE];
 int currentDistance = 0;
@@ -244,10 +244,10 @@ void loop()
   Serial.println(distance);
  #endif
 
-  if(distance > MAX_DISTANCE)
+  if(distance < MAX_DISTANCE) {
     stop();
-  else
-    forward();
+    return;
+  }
 #endif //ENABLE_ULTRASND
 
   if(switchFrontReading == HIGH && switchBackReading == HIGH) {
