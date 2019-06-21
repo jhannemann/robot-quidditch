@@ -1,5 +1,4 @@
 from tkinter import *
-from datetime import timedelta
 
 
 class ScoreBoard(Frame):
@@ -29,13 +28,13 @@ class ScoreBoard(Frame):
                                     font=('Courier', 100, 'bold'))
         self.buttonRed = Button(parent, text='+',
                                 font=('Helvetica', 100, 'bold'),
-                                command=self.increaseRedScore)
+                                command=self.increase_red_score)
         self.buttonTime = Button(parent, text='▶',
                                  font=('Helvetica', 100, 'bold'),
-                                 command=self.toggleTime)
+                                 command=self.toggle_time)
         self.buttonBlue = Button(parent, text='+',
                                  font=('Helvetica', 100, 'bold'),
-                                 command=self.increaseBlueScore)
+                                 command=self.increase_blue_score)
 
         self.nameRedLabel.grid(row=0, column=0, sticky=NSEW)
         self.timeLabel.grid(row=0, column=1, sticky=NSEW, rowspan=2)
@@ -53,14 +52,14 @@ class ScoreBoard(Frame):
         parent.columnconfigure(1, weight=3)
         parent.columnconfigure(2, weight=1)
 
-    def timeString(self):
+    def time_string(self):
         return '{0:02.0f}:{1:02.0f}'.format(self.timeLeft//60,
                                             self.timeLeft % 60)
 
-    def scoreString(self, score):
+    def score_string(self, score):
         return '{0:03.0f}'.format(score)
 
-    def toggleTime(self):
+    def toggle_time(self):
         if self.running:
             self.running = False
             self.buttonTime.config(text='▶')
@@ -69,44 +68,46 @@ class ScoreBoard(Frame):
         else:
             self.running = True
             self.buttonTime.config(text='■')
-            self.timer = self.after(1000, self.decreaseTime)
+            self.timer = self.after(1000, self.decrease_time)
 
-    def increaseRedScore(self):
+    def increase_red_score(self):
         self.scoreRed += 1
-        self.scoreRedLabel.config(text=self.scoreString(self.scoreRed))
+        self.scoreRedLabel.config(text=self.score_string(self.scoreRed))
 
-    def increaseBlueScore(self):
+    def increase_blue_score(self):
         self.scoreBlue += 1
-        self.scoreBlueLabel.config(text=self.scoreString(self.scoreBlue))
+        self.scoreBlueLabel.config(text=self.score_string(self.scoreBlue))
 
-    def decreaseTime(self):
+    def decrease_time(self):
         self.timeLeft -= 1
         if self.timeLeft <= 0:
-            self.toggleTime()
+            self.toggle_time()
             self.timeLeft = ScoreBoard.DEFAULT_GAME_LENGTH
         else:
-            self.timer = self.after(1000, self.decreaseTime)
-        self.timeLabel.config(text=self.timeString())
+            self.timer = self.after(1000, self.decrease_time)
+        self.timeLabel.config(text=self.time_string())
 
 
-def spacePressed(board):
-    board.toggleTime()
+def toggle_time(board):
+    board.toggle_time()
 
 
-def aPressed(board):
-    board.increaseRedScore()
+def increase_red_score(board):
+    board.increase_red_score()
 
 
-def sPressed(board):
-    board.increaseBlueScore()
+def increase_blue_score(board):
+    board.increase_blue_score()
 
 
 root = Tk()
 root.title('RoboArena Score Board')
 root.geometry("900x600+100+100")
 board = ScoreBoard(root)
-root.bind('<space>', lambda event: spacePressed(board))
-root.bind('a', lambda event: aPressed(board))
-root.bind('s', lambda event: sPressed(board))
+root.bind('<space>', lambda event: toggle_time(board))
+root.bind('q', lambda event: increase_red_score(board))
+root.bind('o', lambda event: increase_red_score(board))
+root.bind('w', lambda event: increase_blue_score(board))
+root.bind('p', lambda event: increase_blue_score(board))
 
 mainloop()
