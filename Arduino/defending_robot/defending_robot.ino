@@ -24,7 +24,8 @@ D12              Right servo
 //#define NDEBUG
 //#define ENABLE_CALIBRATION
 //#define ENABLE_QTI
-//#define ENABLE_ULTRASND
+#define ENABLE_ULTRASND
+#define ENABLE_TRACK_TIMEOUT
 
 const int BASE_SPEED = 130; // microseconds
 const int LEFT_DIFFERENTIAL = 0.3*BASE_SPEED; // microseconds
@@ -37,6 +38,8 @@ const int QTI_DISCHARGE_TIME = 800; // microseconds
 const int STARTUP_DELAY = 2000; // milliseconds
 const unsigned long DEBOUNCE_DELAY = 1; // milliseconds
 const unsigned DISTANCE_ARRAY_SIZE = 16;
+const unsigned long TRACK_TIMEOUT = 3000; // milliseconds
+const unsigned long TRACK_MOVEMENT_DURATION = 1000; // milliseconds
 
 const int TRIG_PIN = 10;
 const int ECHO_PIN = 11;
@@ -45,6 +48,40 @@ const int SERVO_R_PIN = 13;
 
 const int SWITCH_F_PIN = 8;
 const int SWITCH_B_PIN = 9;
+
+#ifdef ENABLE_TRACK_TIMEOUT
+class Timer {
+public:
+  Timer(const unsigned long& timeout) : m_timeout(timeout) {}
+  void start() {
+    m_started = millis();
+    m_running = true;
+    return;
+  }
+
+  void stop() {
+    m_running = false;
+  }
+
+  bool running() {
+    return m_running;
+  }
+  
+  bool expired() {
+    if(millis()-m_started >= m_timeout) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+  
+private:
+  unsigned long m_timeout;
+  unsigned long m_started;
+  bool m_running;
+};
+#endif
 
 class Switch {
 public:
@@ -73,6 +110,10 @@ private:
 
 Switch switchFront(SWITCH_F_PIN);
 Switch switchBack(SWITCH_B_PIN);
+
+#ifdef ENABLE_TRACK_TIMEOUT
+Timer timer(TRACK_TIMEOUT);
+#endif
 
 bool reverse = false;
 
@@ -246,6 +287,16 @@ void loop()
 
   if(distance < MAX_DISTANCE) {
     stop();
+#ifdef ENABLE_TRACK_TIMEOUT
+    if(!timer.running()) {
+      timer.start();
+    }
+    else if(timer.expired()) {
+      timer.stop();
+      forward();
+      delay(TRACK_MOVEMENT_DURATION);
+    }
+#endif
     return;
   }
 #endif //ENABLE_ULTRASND
