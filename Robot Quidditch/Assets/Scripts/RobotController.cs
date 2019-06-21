@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿// SPDX-License-Identifier: GPL-3.0-or-later
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
