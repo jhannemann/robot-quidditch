@@ -10,7 +10,8 @@ where I teach computer science and video game development.
 
 This game is part of the larger project in collaboration with
 [Newton's Attic](http://newtonsattic.org),
-in which middle schoolers actually built and the game in the real world.
+in which middle schoolers actually built and played the game
+in the real world.
 During the program,
 it served as a prototyping tool for students,
 so that they could test the characteristics of the robots,
